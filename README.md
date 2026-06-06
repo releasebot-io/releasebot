@@ -47,7 +47,7 @@ You can also set `RELEASEBOT_API_KEY` in your environment instead of saving a fi
 ### Commands
 
 ```bash
-# Search vendors, products, or releases
+# Search for vendors or products
 releasebot search "github actions"
 
 # Recent releases for a vendor
