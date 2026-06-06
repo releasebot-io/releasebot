@@ -13,7 +13,7 @@ This repo publishes two packages:
 
 First, sign up for a Releasebot account at **<https://releasebot.io/sign-up>**
 
-Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 hex characters. Free accounts start with 500 API credits.
+Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 characters. Free accounts start with 500 API credits.
 
 - `search` is **free** (no credits charged).
 - `releases` and `feed` charge **1 credit per release** returned (min 1 credit per request).
@@ -72,6 +72,8 @@ releasebot releases openai --json | jq '.releases[].slug'
 ---
 
 ## MCP Server
+
+`MCP access is also available via our hosted server at https://releasebot.io/mcp`
 
 Add Releasebot to any MCP client. Example for Claude Desktop / Cursor (`claude_desktop_config.json` or `.cursor/mcp.json`):
 
