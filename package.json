@@ -1,0 +1,20 @@
+{
+  "name": "releasebot-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public packages for the Releasebot API: MCP server and CLI",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "build": "pnpm --filter @releasebot-io/lib build && pnpm --filter @releasebot-io/mcp --filter @releasebot-io/cli build",
+    "typecheck": "pnpm -r run typecheck",
+    "clean": "pnpm -r exec -- rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.9.2"
+  }
+}

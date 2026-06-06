@@ -1,0 +1,27 @@
+{
+  "name": "@releasebot-io/cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for the Releasebot API — search software release notes from your terminal",
+  "type": "module",
+  "bin": {
+    "releasebot": "./dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@releasebot-io/lib": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": ["releasebot", "cli", "releases", "changelog", "release-notes"]
+}
