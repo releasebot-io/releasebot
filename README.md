@@ -11,6 +11,8 @@ This repo publishes two packages:
 
 ## Getting an API key
 
+First, sign up for a Releasebot account at **<https://releasebot.io/sign-up>*
+
 Generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 hex characters. Free accounts start with 500 API credits.
 
 - `search` is **free** (no credits charged).
