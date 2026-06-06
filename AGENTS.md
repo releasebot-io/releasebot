@@ -11,7 +11,7 @@ All commands require an API key. Resolution order:
 1. `RELEASEBOT_API_KEY` environment variable
 2. `~/.releasebot/credentials.json` (set via `releasebot auth set <key>`)
 
-Generate a key at https://releasebot.io/account.
+Users must generate a key at https://releasebot.io/notifications.
 
 ---
 
