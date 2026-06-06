@@ -1,13 +1,16 @@
 {
   "name": "@releasebot-io/mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MCP server for Releasebot — search software vendors, products, and release notes from any MCP client",
   "type": "module",
   "bin": {
     "releasebot-mcp": "./dist/index.js"
   },
   "main": "./dist/index.js",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
@@ -25,5 +28,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["mcp", "releasebot", "releases", "changelog", "release-notes", "ai"]
+  "keywords": [
+    "mcp",
+    "releasebot",
+    "releases",
+    "changelog",
+    "release-notes",
+    "ai"
+  ]
 }
