@@ -20,7 +20,7 @@ releasebot releases <vendor[/product]> --json
 releasebot search "<vendor or product name>" --json
 ```
 
-Pick the best match from the results (look for `type: "vendor"` or `type: "product"` and use the `slug` field), then fetch releases:
+Pick the best match from the results (look for `type: "vendor"` or `type: "product"` and use the `slug` field(s)), then fetch releases:
 
 ```bash
 releasebot releases <slug> --json
@@ -34,11 +34,14 @@ For each release, surface:
 - `releaseDetails.release_number` — version, if present
 - `releaseDate` — when it was released
 
-Use `formattedContent` for the full notes if the user wants details. Strip HTML tags before displaying.
+Use `formattedContent` for the full notes if the user wants details.
 
 ## Tips
 
+- Don't search for multiple words at a time - search matches slug first for best results.
+- Instead, try searching multiple times if you can't find something.
 - A coordinate like `openai/chatgpt` scopes results to one product; a bare vendor slug like `openai` returns releases across all of that vendor's products.
 - Use `--limit` to control how many releases to fetch (default 10, max 100).
 - Use `--before <ISO date>` to fetch releases from a specific time window.
 - Credits are charged per release returned — keep `--limit` reasonable.
+
