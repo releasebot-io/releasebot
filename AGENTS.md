@@ -136,6 +136,12 @@ When the user names a vendor or product:
 
 ---
 
+## Skills
+
+There are skills located in the skills folder of this repo which can be used to assist in using the CLI more effectively.
+
+---
+
 ## Credits
 
 | Plan | Credits/month |
