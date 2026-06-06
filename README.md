@@ -73,7 +73,7 @@ releasebot releases openai --json | jq '.releases[].slug'
 
 ## MCP Server
 
-`MCP access is also available via our hosted server at https://releasebot.io/mcp`
+> MCP access is also available via our hosted server at https://releasebot.io/mcp
 
 Add Releasebot to any MCP client. Example for Claude Desktop / Cursor (`claude_desktop_config.json` or `.cursor/mcp.json`):
 
