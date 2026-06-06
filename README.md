@@ -1,6 +1,6 @@
 # Releasebot
 
-Command-line and MCP access to the [Releasebot](https://releasebot.io) catalog: read release notes, changelogs, and products announcements from your terminal or as context to any AI agent.
+Lightweight command-line and MCP access to the [Releasebot](https://releasebot.io) catalog: read release notes, changelogs, and products announcements from your terminal or as context to any AI agent.
 
 This repo publishes two packages:
 
