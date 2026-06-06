@@ -1,7 +1,6 @@
 # Releasebot — Agent Reference
 
 This document describes how to use the Releasebot CLI and MCP tools programmatically.
-Full API docs: https://releasebot.io/data
 
 ---
 
