@@ -143,10 +143,15 @@ export function printReleases(releases: Release[]): void {
 
 export function printSearchTable(results: SearchResult[]): void {
   printTable(
-    results.map((r) => ({
-      Type: String(r.type ?? r.kind ?? "-"),
-      Name: String(r.display_name ?? r.name ?? "-"),
-      Slug: String(r.slug ?? "-"),
-    })),
+    results.map((r) => {
+      const slug = String(r.slug ?? "-");
+      const vendorSlug = r.vendor_slug ? String(r.vendor_slug) : null;
+      const displaySlug = vendorSlug && r.type === "product" ? `${vendorSlug}/${slug}` : slug;
+      return {
+        Type: String(r.type ?? r.kind ?? "-"),
+        Name: String(r.display_name ?? r.name ?? "-"),
+        Slug: displaySlug,
+      };
+    }),
   );
 }
