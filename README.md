@@ -47,16 +47,16 @@ You can also set `RELEASEBOT_API_KEY` in your environment instead of saving a fi
 ### Commands
 
 ```bash
-# Search for vendors or products
-releasebot search "github actions"
+# Search for vendors or products. Returns a list of matches which can be used to return releases.
+releasebot search "github"
 
-# Recent releases for a vendor
+# Return recent releases for a vendor
 releasebot releases openai
 
-# Recent releases for a specific product (vendor/product)
+# Return recent releases for a specific product (vendor-slug/product-slug)
 releasebot releases openai/chatgpt --limit 20
 
-# Releases on or before a date
+# Return releases on or before a date
 releasebot releases apple --before 2025-01-01
 
 # Your followed feed (vendors/products you follow on releasebot.io)
