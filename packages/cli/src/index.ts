@@ -2,7 +2,9 @@ import { Command } from "commander";
 import { ReleasebotApiError } from "@releasebot-io/lib";
 import { registerAuthCommand } from "./commands/auth.js";
 import { registerSearchCommand } from "./commands/search.js";
+import { registerSearchReleasesCommand } from "./commands/searchReleases.js";
 import { registerReleasesCommand } from "./commands/releases.js";
+import { registerAllCommand } from "./commands/all.js";
 import { registerFeedCommand } from "./commands/feed.js";
 
 const program = new Command();
@@ -14,7 +16,9 @@ program
 
 registerAuthCommand(program);
 registerSearchCommand(program);
+registerSearchReleasesCommand(program);
 registerReleasesCommand(program);
+registerAllCommand(program);
 registerFeedCommand(program);
 
 function formatError(err: unknown): string {

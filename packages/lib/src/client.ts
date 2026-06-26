@@ -6,6 +6,9 @@ import type {
   ReleasesResponse,
   FeedParams,
   FeedResponse,
+  AllParams,
+  ReleaseSearchParams,
+  ReleaseSearchResponse,
 } from "./types.js";
 
 const DEFAULT_BASE_URL = "https://releasebot.io/api/v1";
@@ -72,6 +75,16 @@ export class ReleasebotClient {
     });
   }
 
+  /** Keyword search across all release notes content, newest-first. Charges 1 credit per release. */
+  searchReleases(params: ReleaseSearchParams): Promise<ReleaseSearchResponse> {
+    return this.get<ReleaseSearchResponse>("/releases/search", {
+      q: params.q,
+      limit: params.limit,
+      offset: params.offset,
+      before: params.before,
+    });
+  }
+
   /** List recent releases for a vendor and/or product. Charges 1 credit per release. */
   releases(params: ReleasesParams): Promise<ReleasesResponse> {
     return this.get<ReleasesResponse>("/releases", {
@@ -79,6 +92,15 @@ export class ReleasebotClient {
       vendorId: params.vendorId,
       productSlug: params.productSlug,
       productId: params.productId,
+      limit: params.limit,
+      offset: params.offset,
+      before: params.before,
+    });
+  }
+
+  /** List all releases across every vendor/product, newest-first. Charges 1 credit per release. */
+  all(params: AllParams = {}): Promise<ReleasesResponse> {
+    return this.get<ReleasesResponse>("/all", {
       limit: params.limit,
       offset: params.offset,
       before: params.before,

@@ -16,14 +16,14 @@ First, sign up for a Releasebot account at **<https://releasebot.io/sign-up>**
 Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 characters. Free accounts start with 500 API credits.
 
 - `search` is **free** (no credits charged).
-- `releases` and `feed` charge **1 credit per release** returned (min 1 credit per request).
+- `releases`, `search-releases`, `all`, and `feed` charge **1 credit per release** returned (min 1 credit per request).
 - Responses include an `X-Credits-Remaining` header; a `402` means you're out (upgrade at <https://releasebot.io/billing>).
 
 | Plan | Credits / month |
 | ---- | --------------- |
 | Free | 500             |
 | Pro  | 5,000           |
-| Max  | 100,000         |
+| Max  | Unlimited       |
 
 ---
 
@@ -50,6 +50,10 @@ You can also set `RELEASEBOT_API_KEY` in your environment instead of saving a fi
 # Search for vendors or products. Returns a list of matches which can be used to return releases.
 releasebot search "github"
 
+# Keyword search across all release notes (any vendor/product)
+releasebot search-releases "dark mode"
+releasebot grep "CVE-2024" --limit 50   # 'grep' is an alias
+
 # Return recent releases for a vendor
 releasebot releases openai
 
@@ -58,6 +62,9 @@ releasebot releases openai/chatgpt --limit 20
 
 # Return releases on or before a date
 releasebot releases apple --before 2025-01-01
+
+# All releases across every vendor/product, newest-first
+releasebot all --limit 50
 
 # Your followed feed (vendors/products you follow on releasebot.io)
 releasebot feed
@@ -94,7 +101,8 @@ If you've already run `releasebot auth set`, the server picks up the key from `~
 ### Tools
 
 - **`search_vendor`** — search vendors and products by keyword. Args: `query` (required), `maxResults`, `pageOffset`.
-- **`search_releases`** — list recent releases. Provide at least one of `vendorSlug`, `vendorId`, `productSlug`, `productId`. Optional: `limit`, `offset`, `before`.
+- **`search_releases`** — list recent releases scoped to a vendor/product. Provide at least one of `vendorSlug`, `vendorId`, `productSlug`, `productId`. Optional: `limit`, `offset`, `before`.
+- **`search_release_content`** — general keyword search across all release notes (any vendor/product), newest-first. Args: `query` (required), `limit`, `offset`, `before`.
 
 ---
 

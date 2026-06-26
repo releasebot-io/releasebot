@@ -14,6 +14,7 @@ const INSTRUCTIONS = [
   "Available tools:",
   "- search_vendor: Find vendors and products by name. Returns slug, id, name, and type for each match.",
   "- search_releases: Fetch recent releases scoped to a vendor or product.",
+  "- search_release_content: General keyword search across ALL release notes (any vendor/product), newest-first. Use when you don't know the vendor/product.",
   "",
   "Recommended workflow:",
   "1. Call search_vendor with just the VENDOR name (e.g. 'Anthropic') to get its slug.",
@@ -61,6 +62,20 @@ const searchReleasesInputShape = {
     .optional()
     .describe("Numeric product ID from search_vendor results. Use productSlug instead when possible."),
   limit: z.number().int().min(1).max(100).optional().describe("Number of releases to return. Defaults to 10. Max 100."),
+  offset: z.number().int().min(0).optional().describe("Zero-based pagination offset. Defaults to 0."),
+  before: z
+    .string()
+    .optional()
+    .describe("ISO date string — only return releases on or before this date."),
+} as const;
+
+const searchReleaseContentInputShape = {
+  query: z
+    .string()
+    .describe(
+      "Keyword or phrase to search for across ALL release notes content (case-insensitive substring match). Returns matching releases from any vendor/product, newest-first. Use when you don't know the vendor/product — e.g. 'CVE-2024', 'dark mode', 'breaking change'."
+    ),
+  limit: z.number().int().min(1).max(100).optional().describe("Number of releases to return. Defaults to 20. Max 100."),
   offset: z.number().int().min(0).optional().describe("Zero-based pagination offset. Defaults to 0."),
   before: z
     .string()
@@ -166,6 +181,33 @@ server.registerTool(
         productSlug: args.productSlug,
         productId: args.productId,
         limit: args.limit ?? 10,
+        offset: args.offset ?? 0,
+        before: args.before,
+      });
+      return toolResult(result);
+    } catch (err) {
+      throw toMcpError(err);
+    }
+  },
+);
+
+server.registerTool(
+  "search_release_content",
+  {
+    title: "Search release content by keyword",
+    description:
+      "General keyword search across ALL release notes content, regardless of vendor or product. Case-insensitive substring match; results are newest-first. Use this when you don't have a specific vendor/product in mind (e.g. 'CVE-2024', 'dark mode', 'deprecated API'). Defaults to 20 results; use 'limit' for more (max 100).",
+    inputSchema: searchReleaseContentInputShape,
+  },
+  async (args) => {
+    const q = args.query?.trim();
+    if (!q) {
+      throw new McpError(ErrorCode.InvalidParams, "Provide a non-empty 'query'.");
+    }
+    try {
+      const result = await getClient().searchReleases({
+        q,
+        limit: args.limit ?? 20,
         offset: args.offset ?? 0,
         before: args.before,
       });

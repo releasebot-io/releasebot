@@ -26,6 +26,14 @@ Pick the best match from the results (look for `type: "vendor"` or `type: "produ
 releasebot releases <slug> --json
 ```
 
+**If the user is searching by topic/keyword rather than a known vendor or product** (e.g. "which tools added dark mode?", "any release notes mentioning CVE-2024?"), search release content directly:
+
+```bash
+releasebot search-releases "<keyword or phrase>" --json
+```
+
+This matches the keyword against the full text of every release note across all vendors and products, newest-first.
+
 ## Presenting results
 
 For each release, surface:

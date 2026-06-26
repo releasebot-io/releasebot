@@ -8,8 +8,11 @@ export type {
   SearchResponse,
   ReleasesResponse,
   FeedResponse,
+  ReleaseSearchResponse,
   SearchParams,
   ReleasesParams,
   FeedParams,
+  AllParams,
+  ReleaseSearchParams,
   ClientConfig,
 } from "./types.js";

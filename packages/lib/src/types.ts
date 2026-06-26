@@ -52,6 +52,13 @@ export interface ReleasesResponse {
 
 export type FeedResponse = ReleasesResponse;
 
+export interface ReleaseSearchResponse {
+  query: string;
+  releases: Release[];
+  nextOffset: number | null;
+  total: number;
+}
+
 export interface SearchParams {
   q: string;
   limit?: number;
@@ -72,6 +79,21 @@ export interface ReleasesParams {
 export interface FeedParams {
   limit?: number;
   offset?: number;
+  before?: string;
+}
+
+export interface AllParams {
+  limit?: number;
+  offset?: number;
+  before?: string;
+}
+
+export interface ReleaseSearchParams {
+  /** Keyword/phrase to match against release notes content (case-insensitive). */
+  q: string;
+  limit?: number;
+  offset?: number;
+  /** ISO date string — only return releases on or before this date. */
   before?: string;
 }
 
