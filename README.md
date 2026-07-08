@@ -13,7 +13,7 @@ This repo publishes two packages:
 
 First, sign up for a Releasebot account at **<https://releasebot.io/sign-up>**
 
-Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 characters. Free accounts start with 500 API credits.
+Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 characters. Free accounts start with 250 API credits.
 
 - `search` is **free** (no credits charged).
 - `releases`, `search-releases`, `all`, and `feed` charge **1 credit per release** returned (min 1 credit per request).
@@ -21,7 +21,7 @@ Then, generate a key at **<https://releasebot.io/notifications>**. Keys look lik
 
 | Plan | Credits / month |
 | ---- | --------------- |
-| Free | 500             |
+| Free | 250             |
 | Pro  | 5,000           |
 | Max  | Unlimited       |
 
