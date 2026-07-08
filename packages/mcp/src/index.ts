@@ -67,6 +67,10 @@ const searchReleasesInputShape = {
     .string()
     .optional()
     .describe("ISO date string — only return releases on or before this date."),
+  since: z
+    .string()
+    .optional()
+    .describe("ISO date string — only return releases on or after this date."),
 } as const;
 
 const searchReleaseContentInputShape = {
@@ -81,6 +85,10 @@ const searchReleaseContentInputShape = {
     .string()
     .optional()
     .describe("ISO date string — only return releases on or before this date."),
+  since: z
+    .string()
+    .optional()
+    .describe("ISO date string — only return releases on or after this date."),
 } as const;
 
 function getClient(): ReleasebotClient {
@@ -183,6 +191,7 @@ server.registerTool(
         limit: args.limit ?? 10,
         offset: args.offset ?? 0,
         before: args.before,
+        since: args.since,
       });
       return toolResult(result);
     } catch (err) {
@@ -210,6 +219,7 @@ server.registerTool(
         limit: args.limit ?? 20,
         offset: args.offset ?? 0,
         before: args.before,
+        since: args.since,
       });
       return toolResult(result);
     } catch (err) {

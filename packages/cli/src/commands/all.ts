@@ -8,10 +8,12 @@ export function registerAllCommand(program: Command): void {
     .option("--json", "Output raw JSON")
     .option("-l, --limit <n>", "Max results", "20")
     .option("--before <date>", "Only show releases on or before this ISO date")
-    .action(async (opts: { json?: boolean; limit: string; before?: string }) => {
+    .option("--since <date>", "Only show releases on or after this ISO date")
+    .action(async (opts: { json?: boolean; limit: string; before?: string; since?: string }) => {
       const result = await getClient().all({
         limit: Number(opts.limit),
         before: opts.before,
+        since: opts.since,
       });
 
       if (opts.json) {

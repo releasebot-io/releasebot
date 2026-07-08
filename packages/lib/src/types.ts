@@ -74,18 +74,26 @@ export interface ReleasesParams {
   offset?: number;
   /** ISO date string — only return releases on or before this date. */
   before?: string;
+  /** ISO date string — only return releases on or after this date. */
+  since?: string;
 }
 
 export interface FeedParams {
   limit?: number;
   offset?: number;
+  /** ISO date string — only return releases on or before this date. */
   before?: string;
+  /** ISO date string — only return releases on or after this date. */
+  since?: string;
 }
 
 export interface AllParams {
   limit?: number;
   offset?: number;
+  /** ISO date string — only return releases on or before this date. */
   before?: string;
+  /** ISO date string — only return releases on or after this date. */
+  since?: string;
 }
 
 export interface ReleaseSearchParams {
@@ -95,6 +103,8 @@ export interface ReleaseSearchParams {
   offset?: number;
   /** ISO date string — only return releases on or before this date. */
   before?: string;
+  /** ISO date string — only return releases on or after this date. */
+  since?: string;
 }
 
 export interface ClientConfig {

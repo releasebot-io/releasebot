@@ -50,6 +50,6 @@ Use `formattedContent` for the full notes if the user wants details.
 - Instead, try searching multiple times if you can't find something.
 - A coordinate like `openai/chatgpt` scopes results to one product; a bare vendor slug like `openai` returns releases across all of that vendor's products.
 - Use `--limit` to control how many releases to fetch (default 10, max 100).
-- Use `--before <ISO date>` to fetch releases from a specific time window.
+- Use `--before <ISO date>` and/or `--since <ISO date>` to fetch releases from a specific time window (e.g. `--since` alone fetches everything discovered after a date).
 - Credits are charged per release returned — keep `--limit` reasonable.
 

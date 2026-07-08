@@ -82,6 +82,7 @@ export class ReleasebotClient {
       limit: params.limit,
       offset: params.offset,
       before: params.before,
+      since: params.since,
     });
   }
 
@@ -95,6 +96,7 @@ export class ReleasebotClient {
       limit: params.limit,
       offset: params.offset,
       before: params.before,
+      since: params.since,
     });
   }
 
@@ -104,6 +106,7 @@ export class ReleasebotClient {
       limit: params.limit,
       offset: params.offset,
       before: params.before,
+      since: params.since,
     });
   }
 
@@ -113,6 +116,7 @@ export class ReleasebotClient {
       limit: params.limit,
       offset: params.offset,
       before: params.before,
+      since: params.since,
     });
   }
 }

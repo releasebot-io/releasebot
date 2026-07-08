@@ -8,8 +8,9 @@ export function registerFeedCommand(program: Command): void {
     .option("--json", "Output raw JSON")
     .option("-l, --limit <n>", "Max results", "10")
     .option("--before <date>", "Only show releases on or before this ISO date")
-    .action(async (opts: { json?: boolean; limit: string; before?: string }) => {
-      const result = await getClient().feed({ limit: Number(opts.limit), before: opts.before });
+    .option("--since <date>", "Only show releases on or after this ISO date")
+    .action(async (opts: { json?: boolean; limit: string; before?: string; since?: string }) => {
+      const result = await getClient().feed({ limit: Number(opts.limit), before: opts.before, since: opts.since });
 
       if (opts.json) {
         printJson(result);

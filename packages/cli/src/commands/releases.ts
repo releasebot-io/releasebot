@@ -8,7 +8,8 @@ export function registerReleasesCommand(program: Command): void {
     .option("--json", "Output raw JSON")
     .option("-l, --limit <n>", "Max results", "10")
     .option("--before <date>", "Only show releases on or before this ISO date")
-    .action(async (target: string, opts: { json?: boolean; limit: string; before?: string }) => {
+    .option("--since <date>", "Only show releases on or after this ISO date")
+    .action(async (target: string, opts: { json?: boolean; limit: string; before?: string; since?: string }) => {
       const [vendorSlug, productSlug] = target.split("/");
       if (!vendorSlug) {
         process.stderr.write("Error: provide a vendor slug, e.g. `releasebot releases openai`.\n");
@@ -20,6 +21,7 @@ export function registerReleasesCommand(program: Command): void {
         productSlug: productSlug || undefined,
         limit: Number(opts.limit),
         before: opts.before,
+        since: opts.since,
       });
 
       if (opts.json) {
