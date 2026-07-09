@@ -1,8 +1,18 @@
 {
   "name": "@releasebot-io/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Command-line interface for the Releasebot API — search software release notes from your terminal",
   "type": "module",
+  "homepage": "https://releasebot.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/releasebot-io/releasebot.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/releasebot-io/releasebot/issues"
+  },
+  "license": "MIT",
   "bin": {
     "releasebot": "./dist/index.js"
   },
