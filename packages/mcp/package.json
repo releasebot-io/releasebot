@@ -1,6 +1,6 @@
 {
   "name": "@releasebot-io/mcp",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "MCP server for Releasebot — search software vendors, products, and release notes from any MCP client",
   "type": "module",
   "homepage": "https://releasebot.io",

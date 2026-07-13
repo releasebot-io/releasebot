@@ -15,6 +15,7 @@ const INSTRUCTIONS = [
   "- search_vendor: Find vendors and products by name. Returns slug, id, name, and type for each match.",
   "- search_releases: Fetch recent releases scoped to a vendor or product.",
   "- search_release_content: General keyword search across ALL release notes (any vendor/product), newest-first. Use when you don't know the vendor/product.",
+  "- my_feed: Fetch recent releases from the authenticated user's followed feed (the vendors/products they follow on releasebot.io). Takes no vendor/product/id — it resolves the feed from the API key.",
   "",
   "Recommended workflow:",
   "1. Call search_vendor with just the VENDOR name (e.g. 'Anthropic') to get its slug.",
@@ -61,6 +62,19 @@ const searchReleasesInputShape = {
     .int()
     .optional()
     .describe("Numeric product ID from search_vendor results. Use productSlug instead when possible."),
+  limit: z.number().int().min(1).max(100).optional().describe("Number of releases to return. Defaults to 10. Max 100."),
+  offset: z.number().int().min(0).optional().describe("Zero-based pagination offset. Defaults to 0."),
+  before: z
+    .string()
+    .optional()
+    .describe("ISO date string — only return releases on or before this date."),
+  since: z
+    .string()
+    .optional()
+    .describe("ISO date string — only return releases on or after this date."),
+} as const;
+
+const myFeedInputShape = {
   limit: z.number().int().min(1).max(100).optional().describe("Number of releases to return. Defaults to 10. Max 100."),
   offset: z.number().int().min(0).optional().describe("Zero-based pagination offset. Defaults to 0."),
   before: z
@@ -217,6 +231,29 @@ server.registerTool(
       const result = await getClient().searchReleases({
         q,
         limit: args.limit ?? 20,
+        offset: args.offset ?? 0,
+        before: args.before,
+        since: args.since,
+      });
+      return toolResult(result);
+    } catch (err) {
+      throw toMcpError(err);
+    }
+  },
+);
+
+server.registerTool(
+  "my_feed",
+  {
+    title: "My followed feed",
+    description:
+      "Fetch recent releases from the authenticated user's followed feed — the vendors and products they follow on releasebot.io. Takes no vendor, product, or id: the feed is resolved from the API key. Use this when the user asks about 'my feed', 'my releases', or 'what I follow'. Defaults to 10 results; use 'limit' for more (max 100).",
+    inputSchema: myFeedInputShape,
+  },
+  async (args) => {
+    try {
+      const result = await getClient().feed({
+        limit: args.limit ?? 10,
         offset: args.offset ?? 0,
         before: args.before,
         since: args.since,

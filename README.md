@@ -106,6 +106,7 @@ If you've already run `releasebot auth set`, the server picks up the key from `~
 - **`search_vendor`** — search vendors and products by keyword. Args: `query` (required), `maxResults`, `pageOffset`.
 - **`search_releases`** — list recent releases scoped to a vendor/product. Provide at least one of `vendorSlug`, `vendorId`, `productSlug`, `productId`. Optional: `limit`, `offset`, `before`, `since`.
 - **`search_release_content`** — general keyword search across all release notes (any vendor/product), newest-first. Args: `query` (required), `limit`, `offset`, `before`, `since`.
+- **`my_feed`** — list recent releases from your followed feed (the vendors/products you follow on releasebot.io). Resolved from your API key — no vendor/product/id. Args: `limit`, `offset`, `before`, `since`.
 
 ---
 
