@@ -36,6 +36,7 @@ If you've already run `releasebot auth set` (via [`@releasebot-io/cli`](https://
 - **`search_vendor`** — search vendors and products by keyword. Args: `query` (required), `maxResults`, `pageOffset`.
 - **`search_releases`** — list recent releases scoped to a vendor/product. Provide at least one of `vendorSlug`, `vendorId`, `productSlug`, `productId`. Optional: `limit`, `offset`, `before`, `since`.
 - **`search_release_content`** — general keyword search across all release notes (any vendor/product), newest-first. Args: `query` (required), `limit`, `offset`, `before`, `since`.
+- **`list_follows`** — list the vendors and products you explicitly follow, with IDs, slugs, names, and parent vendor details for products. Free, including at zero credits. Args: `limit` (default 20, max 100), `offset`. Returns `follows`, `nextOffset`, and page `total`; pass `nextOffset` as the next `offset` until it is `null`.
 - **`my_feed`** — list recent releases from your followed feed (the vendors/products you follow on releasebot.io). Resolved from your API key — no vendor/product/id. Args: `limit`, `offset`, `before`, `since`.
 
 ## Configuration

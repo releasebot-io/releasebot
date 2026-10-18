@@ -15,7 +15,7 @@ First, sign up for a Releasebot account at **<https://releasebot.io/sign-up>**
 
 Then, generate a key at **<https://releasebot.io/notifications>**. Keys look like `rb_` followed by 32 characters. Free accounts start with 250 API credits.
 
-- `search` is **free** (no credits charged).
+- `search` and `follows` are **free** (no credits charged).
 - `releases`, `search-releases`, `all`, and `feed` charge **1 credit per release** returned (min 1 credit per request).
 - Responses include an `X-Credits-Remaining` header; a `402` means you're out (upgrade at <https://releasebot.io/billing>).
 
@@ -71,9 +71,13 @@ releasebot all --limit 50
 
 # Your followed feed (vendors/products you follow on releasebot.io)
 releasebot feed
+
+# List the vendors and products you explicitly follow (free)
+releasebot follows
+releasebot follows --limit 100 --offset 20 --json
 ```
 
-Every data command supports `--json` for raw output (and emits bare TSV when piped), plus `-l/--limit <n>`. The release commands (`releases`, `search-releases`, `all`, `feed`) also accept `--before <date>` and `--since <date>` filters.
+Every data command supports `--json` for raw output (and emits bare TSV when piped), plus `-l/--limit <n>`. The `follows` command also accepts `--offset <n>` for pagination; pass the response’s `nextOffset` as the next offset (`null` means the end). It returns explicit follows without expanding vendor follows into products. The release commands (`releases`, `search-releases`, `all`, `feed`) also accept `--before <date>` and `--since <date>` filters.
 
 ```bash
 releasebot releases openai --json | jq '.releases[].slug'
@@ -106,6 +110,7 @@ If you've already run `releasebot auth set`, the server picks up the key from `~
 - **`search_vendor`** — search vendors and products by keyword. Args: `query` (required), `maxResults`, `pageOffset`.
 - **`search_releases`** — list recent releases scoped to a vendor/product. Provide at least one of `vendorSlug`, `vendorId`, `productSlug`, `productId`. Optional: `limit`, `offset`, `before`, `since`.
 - **`search_release_content`** — general keyword search across all release notes (any vendor/product), newest-first. Args: `query` (required), `limit`, `offset`, `before`, `since`.
+- **`list_follows`** — list the vendors and products you explicitly follow, with IDs, slugs, names, and parent vendor details for products. Free, including at zero credits. Args: `limit` (default 20, max 100), `offset`. Returns `follows`, `nextOffset`, and page `total`; pass `nextOffset` as the next `offset` until it is `null`.
 - **`my_feed`** — list recent releases from your followed feed (the vendors/products you follow on releasebot.io). Resolved from your API key — no vendor/product/id. Args: `limit`, `offset`, `before`, `since`.
 
 ---

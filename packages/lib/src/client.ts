@@ -6,6 +6,8 @@ import type {
   ReleasesResponse,
   FeedParams,
   FeedResponse,
+  FollowsParams,
+  FollowsResponse,
   AllParams,
   ReleaseSearchParams,
   ReleaseSearchResponse,
@@ -107,6 +109,14 @@ export class ReleasebotClient {
       offset: params.offset,
       before: params.before,
       since: params.since,
+    });
+  }
+
+  /** List explicitly followed vendors and products. No credits charged. */
+  follows(params: FollowsParams = {}): Promise<FollowsResponse> {
+    return this.get<FollowsResponse>("/follows", {
+      limit: params.limit,
+      offset: params.offset,
     });
   }
 

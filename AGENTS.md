@@ -62,6 +62,12 @@ releasebot feed [--limit <n>] [--before <date>] [--json]
 List releases from the authenticated key's followed feed. Charges 1 credit per release.
 
 ```
+releasebot follows [--limit <n>] [--offset <n>] [--json]
+```
+
+List explicitly followed vendors and products. Free, including at zero credits. Defaults to 20 results (max 100). Returns `follows`, `nextOffset`, and page `total`. Pass `nextOffset` as `--offset` until it is `null`. Product follows include their parent vendor; vendor follows are not expanded into product follows.
+
+```
 releasebot auth set <key>
 releasebot auth status
 ```
@@ -155,6 +161,17 @@ General keyword search across the full text of all release notes, regardless of 
 | `offset`  | number | No       | Pagination offset                                      |
 | `before`  | string | No       | ISO date — only return releases on or before this date |
 
+### `list_follows`
+
+List the vendors and products the authenticated user explicitly follows. Free, including at zero credits. Returns IDs, slugs, names, and parent vendor details for products, plus `nextOffset` and page `total`.
+
+| Parameter | Type   | Required | Description                                      |
+| --------- | ------ | -------- | ------------------------------------------------ |
+| `limit`   | number | No       | Max entities (default 20, max 100)                |
+| `offset`  | number | No       | Pagination offset; use the response's `nextOffset` |
+
+Stop paging when `nextOffset` is `null`. Vendor follows are not expanded into product follows.
+
 ### `my_feed`
 
 List recent releases from the authenticated user's followed feed — the vendors and products they follow on releasebot.io. Takes no vendor, product, or id: the feed is resolved from the API key. Charges 1 credit per release returned.
@@ -175,7 +192,7 @@ When the user names a vendor or product:
 
 When the user searches by topic/keyword and no specific vendor or product is known, call `search_release_content` directly.
 
-When the user asks about "my feed", "my releases", or "what I follow", call `my_feed` directly.
+When the user asks about "my feed" or "my releases", call `my_feed` directly. When they ask "what do I follow?", call `list_follows`.
 
 ---
 
@@ -189,8 +206,8 @@ There are skills located in the skills folder of this repo which can be used to 
 
 | Plan | Credits/month |
 | ---- | ------------- |
-| Free | 500           |
+| Free | 250           |
 | Pro  | 5,000         |
 | Max  | Unlimited     |
 
-`search` / `search_vendor` are free. `releases`, `search-releases`, `all`, `feed`, `search_releases`, `search_release_content`, and `my_feed` charge 1 credit per release returned (minimum 1 per call).
+`search` / `search_vendor` and `follows` / `list_follows` are free. `releases`, `search-releases`, `all`, `feed`, `search_releases`, `search_release_content`, and `my_feed` charge 1 credit per release returned (minimum 1 per call).

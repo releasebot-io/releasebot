@@ -15,7 +15,7 @@ npx @releasebot-io/cli search openai
 1. Sign up for a free account at **<https://releasebot.io/sign-up>**
 2. Generate a key at **<https://releasebot.io/notifications>** — keys look like `rb_` followed by 32 characters.
 
-Free accounts start with 250 API credits. `search` is free; `releases`, `search-releases`, `all`, and `feed` charge 1 credit per release returned (min 1 per request). See plans at <https://releasebot.io/billing>.
+Free accounts start with 250 API credits. `search` and `follows` are free; `releases`, `search-releases`, `all`, and `feed` charge 1 credit per release returned (min 1 per request). See plans at <https://releasebot.io/billing>.
 
 ## Authenticate
 
@@ -53,9 +53,13 @@ releasebot all --limit 50
 
 # Your followed feed (vendors/products you follow on releasebot.io)
 releasebot feed
+
+# List the vendors and products you explicitly follow (free)
+releasebot follows
+releasebot follows --limit 100 --offset 20 --json
 ```
 
-Every data command supports `--json` for raw output (and emits bare TSV when piped), plus `-l/--limit <n>`. The release commands (`releases`, `search-releases`, `all`, `feed`) also accept `--before <date>` and `--since <date>` filters.
+Every data command supports `--json` for raw output (and emits bare TSV when piped), plus `-l/--limit <n>`. The `follows` command also accepts `--offset <n>` for pagination; pass the response’s `nextOffset` as the next offset (`null` means the end). It returns explicit follows without expanding vendor follows into products. The release commands (`releases`, `search-releases`, `all`, `feed`) also accept `--before <date>` and `--since <date>` filters.
 
 ```bash
 releasebot releases openai --json | jq '.releases[].slug'

@@ -52,6 +52,22 @@ export interface ReleasesResponse {
 
 export type FeedResponse = ReleasesResponse;
 
+export type Follow =
+  | (Vendor & { kind: "vendor" })
+  | (Product & { kind: "product"; vendor: Vendor | null });
+
+export interface FollowsResponse {
+  follows: Follow[];
+  nextOffset: number | null;
+  /** Number of entities returned on this page. */
+  total: number;
+}
+
+export interface FollowsParams {
+  limit?: number;
+  offset?: number;
+}
+
 export interface ReleaseSearchResponse {
   query: string;
   releases: Release[];

@@ -6,7 +6,7 @@ import { ReleasebotClient, ReleasebotApiError } from "@releasebot-io/lib";
 import { resolveApiKey } from "@releasebot-io/lib/credentials";
 
 const SERVER_NAME = "releasebot-mcp";
-const SERVER_VERSION = process.env.npm_package_version ?? "0.1.0";
+const SERVER_VERSION = "0.5.0";
 
 const INSTRUCTIONS = [
   "Releasebot tracks software release notes across thousands of vendors and products.",
@@ -15,6 +15,7 @@ const INSTRUCTIONS = [
   "- search_vendor: Find vendors and products by name. Returns slug, id, name, and type for each match.",
   "- search_releases: Fetch recent releases scoped to a vendor or product.",
   "- search_release_content: General keyword search across ALL release notes (any vendor/product), newest-first. Use when you don't know the vendor/product.",
+  "- list_follows: List the vendors and products the authenticated user explicitly follows. Free; use for 'what do I follow?'.",
   "- my_feed: Fetch recent releases from the authenticated user's followed feed (the vendors/products they follow on releasebot.io). Takes no vendor/product/id — it resolves the feed from the API key.",
   "",
   "Recommended workflow:",
@@ -72,6 +73,11 @@ const searchReleasesInputShape = {
     .string()
     .optional()
     .describe("ISO date string — only return releases on or after this date."),
+} as const;
+
+const listFollowsInputShape = {
+  limit: z.number().int().min(1).max(100).optional().describe("Number of followed entities to return. Defaults to 20. Max 100."),
+  offset: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER - 100).optional().describe("Zero-based pagination offset. Use nextOffset to request the next page."),
 } as const;
 
 const myFeedInputShape = {
@@ -247,7 +253,7 @@ server.registerTool(
   {
     title: "My followed feed",
     description:
-      "Fetch recent releases from the authenticated user's followed feed — the vendors and products they follow on releasebot.io. Takes no vendor, product, or id: the feed is resolved from the API key. Use this when the user asks about 'my feed', 'my releases', or 'what I follow'. Defaults to 10 results; use 'limit' for more (max 100).",
+      "Fetch recent releases from the authenticated user's followed feed — the vendors and products they follow on releasebot.io. Takes no vendor, product, or id: the feed is resolved from the API key. Use this when the user asks about 'my feed' or 'my releases'. To list followed vendors and products, use list_follows. Defaults to 10 results; use 'limit' for more (max 100).",
     inputSchema: myFeedInputShape,
   },
   async (args) => {
@@ -257,6 +263,27 @@ server.registerTool(
         offset: args.offset ?? 0,
         before: args.before,
         since: args.since,
+      });
+      return toolResult(result);
+    } catch (err) {
+      throw toMcpError(err);
+    }
+  },
+);
+
+server.registerTool(
+  "list_follows",
+  {
+    title: "List followed vendors and products",
+    description:
+      "List the vendors and products the authenticated user explicitly follows, with IDs, slugs, names, and parent vendor details for products. Use for 'what do I follow?'. Free, including at zero credits. Defaults to 20 results (max 100); pass nextOffset as offset for the next page. Products covered by a vendor follow are not expanded into separate follows.",
+    inputSchema: listFollowsInputShape,
+  },
+  async (args) => {
+    try {
+      const result = await getClient().follows({
+        limit: args.limit ?? 20,
+        offset: args.offset ?? 0,
       });
       return toolResult(result);
     } catch (err) {

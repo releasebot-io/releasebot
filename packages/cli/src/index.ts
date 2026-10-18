@@ -6,13 +6,14 @@ import { registerSearchReleasesCommand } from "./commands/searchReleases.js";
 import { registerReleasesCommand } from "./commands/releases.js";
 import { registerAllCommand } from "./commands/all.js";
 import { registerFeedCommand } from "./commands/feed.js";
+import { registerFollowsCommand } from "./commands/follows.js";
 
 const program = new Command();
 
 program
   .name("releasebot")
   .description("CLI for the Releasebot API — search software release notes from your terminal")
-  .version("0.1.0");
+  .version("0.5.0");
 
 registerAuthCommand(program);
 registerSearchCommand(program);
@@ -20,6 +21,7 @@ registerSearchReleasesCommand(program);
 registerReleasesCommand(program);
 registerAllCommand(program);
 registerFeedCommand(program);
+registerFollowsCommand(program);
 
 function formatError(err: unknown): string {
   if (err instanceof ReleasebotApiError) {
